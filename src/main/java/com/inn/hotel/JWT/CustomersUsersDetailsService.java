@@ -16,7 +16,7 @@ import java.util.Objects;
 @Service
 public class CustomersUsersDetailsService implements UserDetailsService {
 
-    @Autowired
+    @Autowired(required = false)
     UserDao userDao;
 
     private com.inn.hotel.POJO.User userDetail;

@@ -53,6 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setName(requestMap.get("name"));
         customer.setLastName(requestMap.get("lastName"));
         customer.setContactNumber(requestMap.get("contactNumber"));
+        customer.setDoc(requestMap.get("doc"));
         customer.setDni(requestMap.get("dni"));
         return customer;
     }

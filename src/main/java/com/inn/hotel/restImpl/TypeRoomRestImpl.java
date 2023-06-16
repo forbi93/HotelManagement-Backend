@@ -1,9 +1,10 @@
 package com.inn.hotel.restImpl;
 
-import com.inn.hotel.POJO.Customer;
+import com.google.common.base.Strings;
+import com.inn.hotel.POJO.TypeRoom;
 import com.inn.hotel.constents.HotelConstants;
-import com.inn.hotel.rest.CustomerRest;
-import com.inn.hotel.service.CustomerService;
+import com.inn.hotel.rest.TypeRoomRest;
+import com.inn.hotel.service.TypeRoomService;
 import com.inn.hotel.utils.HotelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,16 +16,15 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class CustomerRestImpl implements CustomerRest {
+public class TypeRoomRestImpl implements TypeRoomRest {
 
     @Autowired
-    CustomerService customerService;
-
+    TypeRoomService typeRoomService;
 
     @Override
-    public ResponseEntity<String> addNewCustomer(Map<String, String> requestMap) {
+    public ResponseEntity<String> addNewTypeRoom(Map<String, String> requestMap) {
         try{
-            return customerService.addNewCustomer(requestMap);
+            return typeRoomService.addNewTypeRoom(requestMap);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -32,9 +32,9 @@ public class CustomerRestImpl implements CustomerRest {
     }
 
     @Override
-    public ResponseEntity<List<Customer>> getAllCustomer(String filterValue) {
+    public ResponseEntity<List<TypeRoom>> getAllTypeRoom(String filterValue) {
         try{
-            return customerService.getAllCustomer(filterValue);
+            return typeRoomService.getAllTypeRoom(filterValue);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -42,9 +42,9 @@ public class CustomerRestImpl implements CustomerRest {
     }
 
     @Override
-    public ResponseEntity<String> updateCustomer(Map<String, String> requestMap) {
+    public ResponseEntity<String> updateTypeRoom(Map<String, String> requestMap) {
         try{
-            return customerService.updateCustomer(requestMap);
+            return typeRoomService.updateTypeRoom(requestMap);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -52,12 +52,13 @@ public class CustomerRestImpl implements CustomerRest {
     }
 
     @Override
-    public ResponseEntity<String> deleteCustomer(Integer id) {
+    public ResponseEntity<String> deleteTypeRoom(Integer id) {
         try{
-            return customerService.deleteCustomer(id);
-        }catch (Exception ex){
+            return typeRoomService.deleteTypeRoom(id);
+        }catch (Exception ex) {
             ex.printStackTrace();
         }
         return HotelUtils.getResponseEntity(HotelConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

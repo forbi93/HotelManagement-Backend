@@ -38,4 +38,7 @@ public class Customer implements Serializable {
     @Column(name = "dni")
     private String dni;
 
+    @Column(name = "doc")
+    private String doc;
+
 }
