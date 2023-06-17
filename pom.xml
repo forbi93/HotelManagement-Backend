@@ -58,6 +58,14 @@
             <version>5.5.10</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.microsoft.azure/azure-spring-apps-maven-plugin -->
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-spring-apps-maven-plugin</artifactId>
+            <version>1.18.0</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
@@ -136,6 +144,11 @@
             <groupId>org.eclipse.angus</groupId>
             <artifactId>jakarta.mail</artifactId>
             <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.azure.resourcemanager</groupId>
+            <artifactId>azure-resourcemanager-botservice</artifactId>
+            <version>1.0.0-beta.5</version>
         </dependency>
     </dependencies>
     <build>
