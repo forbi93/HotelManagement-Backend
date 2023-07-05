@@ -53,8 +53,8 @@ public class ReservationServiceImpl implements ReservationService {
                     insertReservation(requestMap);
                 }
 
-                String data = "Name: " + requestMap.get("name") + "\n" + "Contact Number: " + requestMap.get("contactNumber") +
-                        "\n" + "Email: " + requestMap.get("email") + "\n" + "Payment Method: " + requestMap.get("paymentMethod");
+                String data = "Nombre: " + requestMap.get("name") + "\n" + "Celular: " + requestMap.get("contactNumber") +
+                        "\n" + "Email: " + requestMap.get("email") + "\n" + "Método de pago: " + requestMap.get("paymentMethod");
 
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(HotelConstants.STORE_LOCATION + "\\" + fileName + ".pdf"));
@@ -62,7 +62,7 @@ public class ReservationServiceImpl implements ReservationService {
                 document.open();
                 setRectangleInPdf(document);
 
-                Paragraph chunk = new Paragraph("Hotel Management System", getFont("Header"));
+                Paragraph chunk = new Paragraph("Boleta: La Casa del Turista", getFont("Header"));
                 chunk.setAlignment(Element.ALIGN_CENTER);
                 document.add(chunk);
 
@@ -80,7 +80,7 @@ public class ReservationServiceImpl implements ReservationService {
                 document.add(table);
 
                 Paragraph footer = new Paragraph("Total :" + requestMap.get("totalAmount") + "\n"
-                        + "Thank you for visiting.Please visit again!!", getFont("Data"));
+                        + "Gracias por visitarnos. Visítenos nuevamente!!", getFont("Data"));
                 document.add(footer);
                 document.close();
                 return new ResponseEntity<>("{\"uuid\":\"" + fileName + "\"}", HttpStatus.OK);
@@ -95,7 +95,7 @@ public class ReservationServiceImpl implements ReservationService {
     private void addRows(PdfPTable table, Map<String, Object> data) {
         log.info("Inside addRows");
         table.addCell((String) data.get("name"));
-        table.addCell((String) data.get("type"));
+        table.addCell((String) data.get("typeRoom"));
         table.addCell((String) data.get("quantity"));
         table.addCell(Double.toString((Double) data.get("price")));
         table.addCell(Double.toString((Double) data.get("total")));
@@ -103,7 +103,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private void addTableHeader(PdfPTable table) {
         log.info("Inside addTableHeader");
-        Stream.of("Name", "Type", "Hours", "Price", "Sub Total")
+        Stream.of("Habitación", "Tipo", "Horas", "Precio por Hora", "Monto total")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();
                     header.setBackgroundColor(BaseColor.LIGHT_GRAY);
