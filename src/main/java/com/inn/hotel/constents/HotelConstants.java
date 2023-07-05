@@ -8,5 +8,7 @@ public class HotelConstants {
 
     public static final String UNAUTHORIZED_ACCESS = "Unauthorized access";
 
-    public static final String STORE_LOCATION = "C:\\Users\\danko\\Documents\\Boletas";
+    public static final String STORE_LOCATION = "C:\\Users\\jmi\\Documents\\Boletas";
+
 }
+

@@ -58,12 +58,6 @@
             <version>5.5.10</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.microsoft.azure/azure-spring-apps-maven-plugin -->
-        <dependency>
-            <groupId>com.microsoft.azure</groupId>
-            <artifactId>azure-spring-apps-maven-plugin</artifactId>
-            <version>1.18.0</version>
-        </dependency>
 
 
         <dependency>
@@ -78,20 +72,6 @@
             <version>23.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.azure.spring</groupId>
-            <artifactId>spring-cloud-azure-dependencies</artifactId>
-            <version>5.2.0</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.azure.spring/spring-cloud-azure-starter-jdbc-mysql -->
-        <dependency>
-            <groupId>com.azure.spring</groupId>
-            <artifactId>spring-cloud-azure-starter-jdbc-mysql</artifactId>
-            <version>5.2.0</version>
-        </dependency>
 
 
         <dependency>
@@ -145,17 +125,14 @@
             <artifactId>jakarta.mail</artifactId>
             <version>2.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.azure.resourcemanager</groupId>
-            <artifactId>azure-resourcemanager-botservice</artifactId>
-            <version>1.0.0-beta.5</version>
-        </dependency>
+
     </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
                 <configuration>
                     <excludes>
                         <exclude>
