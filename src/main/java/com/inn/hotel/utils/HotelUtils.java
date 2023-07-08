@@ -28,7 +28,7 @@ public class HotelUtils {
     public static String getUUID(){
         Date data = new Date();
         long time = data.getTime();
-        return "RESERVATION-" + time;
+        return "N°-" + time;
     }
 
     public static JSONArray getJsonArrayFromString(String data) throws JSONException{

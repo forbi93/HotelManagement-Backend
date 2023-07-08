@@ -5,7 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-@NamedQuery(name = "Room.getAllRoom", query = "select new com.inn.hotel.wrapper.RoomWrapper(r.id,r.name,r.description,r.beds,r.observations,r.price,r.status,r.typeRoom.id,r.typeRoom.name) from Room r")
+@NamedQuery(name = "Room.getAllRoom", query = "select new com.inn.hotel.wrapper.RoomWrapper(r.id,r.name,r.description,r.windowRoom,r.typeBed,r.comfort,r.hotWater,r.location,r.beds,r.observations,r.price,r.status,r.typeRoom.id,r.typeRoom.name) from Room r")
 
 @NamedQuery(name = "Room.updateRoomStatus", query = "update Room r set r.status=:status where r.id=:id ")
 
@@ -36,6 +36,21 @@ public class Room {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "windowRoom")
+    private String windowRoom;
+
+    @Column(name = "typeBed")
+    private String typeBed;
+
+    @Column(name = "comfort")
+    private String comfort;
+
+    @Column(name = "hotWater")
+    private String hotWater;
+
+    @Column(name = "location")
+    private String location;
 
     @Column(name = "beds")
     private Integer beds;

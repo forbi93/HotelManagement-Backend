@@ -2,9 +2,10 @@ package com.inn.hotel.serviceImpl;
 
 import com.inn.hotel.JWT.JwtFilter;
 import com.inn.hotel.POJO.Reservation;
+import com.inn.hotel.POJO.ReservationRuc;
 import com.inn.hotel.constents.HotelConstants;
-import com.inn.hotel.dao.ReservationDao;
-import com.inn.hotel.service.ReservationService;
+import com.inn.hotel.dao.ReservationRucDao;
+import com.inn.hotel.service.ReservationRucService;
 import com.inn.hotel.utils.HotelUtils;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -30,14 +31,13 @@ import java.util.stream.Stream;
 
 @Slf4j
 @Service
-public class ReservationServiceImpl implements ReservationService {
+public class ReservationRucServiceImpl implements ReservationRucService {
 
     @Autowired
     JwtFilter jwtFilter;
 
     @Autowired
-    ReservationDao reservationDao;
-
+    ReservationRucDao reservationRucDao;
 
     @Override
     public ResponseEntity<String> generateReport(Map<String, Object> requestMap) {
@@ -53,17 +53,17 @@ public class ReservationServiceImpl implements ReservationService {
                     insertReservation(requestMap);
                 }
 
-                String data = "Nombre: " + requestMap.get("name") + "\n" + "Celular: " + requestMap.get("contactNumber") +
-                        "\n" + "Email: " + requestMap.get("email") + "\n" + "Fecha de Emisión: " + requestMap.get("dateCreated") + "\n" + "Método de pago: " + requestMap.get("paymentMethod");
+                String data = "\n" + "Razón Social: " + requestMap.get("razSocial") + "\n" + "RUC: " + requestMap.get("ruc") +
+                        "\n" + "Dirección: " + requestMap.get("address") + "\n" + "Fecha de Emisión: " + requestMap.get("dateCreated") + "\n" +
+                        "Método de pago: " + requestMap.get("paymentMethod");
 
                 Document document = new Document();
                 document.setPageSize(new Rectangle(380, PageSize.A4.getHeight()));
                 PdfWriter.getInstance(document, new FileOutputStream(HotelConstants.STORE_LOCATION + "\\" + fileName + ".pdf"));
 
                 document.open();
-                setRectangleInPdf(document);
 
-                Paragraph chunk = new Paragraph("BOLETA DE VENTA" + "\n" +  "La Casa del Turista" + "\n" +  "RUC: 12368548923" + "\n" + "C. Cesareo Chacaltana 130 B, Lima 15074, Miraflores" + "\n" +  requestMap.get("uuid") + "\n", getFont("Header"));
+                Paragraph chunk = new Paragraph("FACTURA" + "\n" +  "La Casa del Turista" + "\n" +  "RUC: 12368548923" + "\n" + "C. Cesareo Chacaltana 130 B, Lima 15074, Miraflores" + "\n" +  requestMap.get("uuid") + "\n", getFont("Header"));
                 chunk.setAlignment(Element.ALIGN_CENTER);
                 document.add(chunk);
 
@@ -140,7 +140,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private void setRectangleInPdf(Document document) throws DocumentException {
         log.info("Inside setRectangleInPdf");
-        Rectangle rect = new Rectangle(577, 825, 18, 15);
+        Rectangle rect = new Rectangle(577, 825, 300, 15);
         rect.enableBorderSide(1);
         rect.enableBorderSide(2);
         rect.enableBorderSide(4);
@@ -152,41 +152,41 @@ public class ReservationServiceImpl implements ReservationService {
 
     private void insertReservation(Map<String, Object> requestMap) {
         try {
-            Reservation reservation = new Reservation();
+            ReservationRuc reservation = new ReservationRuc();
             reservation.setUuid((String) requestMap.get("uuid"));
-            reservation.setName((String) requestMap.get("name"));
-            reservation.setEmail((String) requestMap.get("email"));
-            reservation.setContactNumber((String) requestMap.get("contactNumber"));
+            reservation.setRazSocial((String) requestMap.get("razSocial"));
+            reservation.setRuc((String) requestMap.get("ruc"));
             reservation.setDateCreated((String) requestMap.get("dateCreated"));
+            reservation.setAddress((String) requestMap.get("address"));
             reservation.setPaymentMethod((String) requestMap.get("paymentMethod"));
             reservation.setDate((String) requestMap.get("date"));
             reservation.setTotal(Integer.parseInt((String) requestMap.get("totalAmount")));
             reservation.setRoomDetail((String) requestMap.get("roomDetails"));
             reservation.setCreatedBy(jwtFilter.getcurrentUser());
-            reservationDao.save(reservation);
+            reservationRucDao.save(reservation);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     private boolean validateRequestMap(Map<String, Object> requestMap) {
-        return requestMap.containsKey("name") &&
-                requestMap.containsKey("contactNumber") &&
-                requestMap.containsKey("email") &&
-                requestMap.containsKey("date") &&
+        return requestMap.containsKey("razSocial") &&
+                requestMap.containsKey("ruc") &&
                 requestMap.containsKey("dateCreated") &&
+                requestMap.containsKey("address") &&
+                requestMap.containsKey("date") &&
                 requestMap.containsKey("paymentMethod") &&
                 requestMap.containsKey("roomDetails") &&
                 requestMap.containsKey("totalAmount");
     }
 
     @Override
-    public ResponseEntity<List<Reservation>> getReservations() {
-        List<Reservation> list = new ArrayList<>();
+    public ResponseEntity<java.util.List<ReservationRuc>> getReservations() {
+        List<ReservationRuc> list = new ArrayList<>();
         if (jwtFilter.isAdmin()) {
-            list = reservationDao.getAllReservations();
+            list = reservationRucDao.getAllReservationsRuc();
         } else {
-            list = reservationDao.getReservationByUserName(jwtFilter.getcurrentUser());
+            list = reservationRucDao.getReservationRucByUserName(jwtFilter.getcurrentUser());
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
@@ -217,9 +217,9 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ResponseEntity<String> deleteReservation(Integer id) {
         try{
-            Optional optional = reservationDao.findById(id);
+            Optional optional = reservationRucDao.findById(id);
             if (!optional.isEmpty()){
-                reservationDao.deleteById(id);
+                reservationRucDao.deleteById(id);
                 return HotelUtils.getResponseEntity("Reservation Deleted Successfully",HttpStatus.OK);
             }
             return HotelUtils.getResponseEntity("Reservation id does not exist", HttpStatus.OK);
@@ -236,4 +236,5 @@ public class ReservationServiceImpl implements ReservationService {
         targetStream.close();
         return byteArray;
     }
+
 }

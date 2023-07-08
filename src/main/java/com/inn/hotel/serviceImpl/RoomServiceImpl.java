@@ -71,6 +71,11 @@ public class RoomServiceImpl implements RoomService {
         room.setName(requestMap.get("name"));
         room.setDescription(requestMap.get("description"));
         room.setBeds(Integer.parseInt(requestMap.get("beds")));
+        room.setWindowRoom(requestMap.get("windowRoom"));
+        room.setTypeBed(requestMap.get("typeBed"));
+        room.setComfort(requestMap.get("comfort"));
+        room.setHotWater(requestMap.get("hotWater"));
+        room.setLocation(requestMap.get("location"));
         room.setObservations(requestMap.get("observations"));
         room.setPrice(Integer.parseInt(requestMap.get("price")));
         return room;

@@ -1,23 +1,21 @@
 package com.inn.hotel.POJO;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-
 import java.io.Serializable;
 
-@NamedQuery(name = "Reservation.getAllReservations", query = "select r from Reservation r order by r.id desc")
+@NamedQuery(name = "ReservationRuc.getAllReservationsRuc", query = "select r from ReservationRuc r order by r.id desc")
 
-@NamedQuery(name = "Reservation.getReservationByUserName", query = "select r from Reservation r where r.createdBy=:username order by r.id desc")
+@NamedQuery(name = "ReservationRuc.getReservationRucByUserName", query = "select r from ReservationRuc r where r.createdBy=:username order by r.id desc")
 
 @Data
 @Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "reservation")
-public class Reservation implements Serializable {
+@Table(name = "reservationRuc")
+public class ReservationRuc implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -29,17 +27,17 @@ public class Reservation implements Serializable {
     @Column(name = "uuid")
     private String uuid;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "razSocial")
+    private String razSocial;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "ruc")
+    private String ruc;
 
     @Column(name = "dateCreated")
     private String dateCreated;
 
-    @Column(name = "contactnumber")
-    private String contactNumber;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "paymentmethod")
     private String paymentMethod;
